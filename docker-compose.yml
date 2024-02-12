@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  streetcat_restream:
+    build: .
+    image: TUBIK-corp/streetcat_restream
+    container_name: streetcat_restream
+    stdin_open: true
+    tty: true
+    command: python ./restream_youtube.py
+    volumes:
+      - ./conf.py:/conf.py:ro
+      - ./client.json:/client.json:ro
+      - ./viewer.log:/viewer.log

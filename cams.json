@@ -1,0 +1,37 @@
+{
+    "fresh": [
+        "http://streetcatpull.hellobike.com/live/4258783365322591678_0.m3u8",
+        "http://streetcatpull.hellobike.com/live/4258783365322591678_1.m3u8",
+        "http://streetcatpull.hellobike.com/live/4258783365322591678_2.m3u8"
+    ],
+    "despair": [
+        "http://streetcatpull.hellobike.com/live/4412424173050749216_0.m3u8",
+        "http://streetcatpull.hellobike.com/live/4412424173050749216_1.m3u8",
+        "http://streetcatpull.hellobike.com/live/4412424173050749216_2.m3u8"
+    ],
+    "sleeps": [
+        "http://streetcatpull.hellobike.com/live/4489918405732275808_0.m3u8",
+        "http://streetcatpull.hellobike.com/live/4489918405732275808_1.m3u8",
+        "http://streetcatpull.hellobike.com/live/4489918405732275808_2.m3u8"
+    ],
+    "snack": [
+        "http://streetcatpull.hellobike.com/live/4291094747934800009_0.m3u8",
+        "http://streetcatpull.hellobike.com/live/4291094747934800009_1.m3u8",
+        "http://streetcatpull.hellobike.com/live/4291094747934800009_2.m3u8"
+    ],
+    "shock": [
+        "http://streetcatpull.hellobike.com/live/4584985755015398729_0.m3u8",
+        "http://streetcatpull.hellobike.com/live/4584985755015398729_1.m3u8",
+        "http://streetcatpull.hellobike.com/live/4584985755015398729_2.m3u8"
+    ],
+    "sonic": [
+        "http://streetcatpull.hellobike.com/live/4303090694701059290_0.m3u8",
+        "http://streetcatpull.hellobike.com/live/4303090694701059290_1.m3u8",
+        "http://streetcatpull.hellobike.com/live/4303090694701059290_2.m3u8"
+    ],
+    "ducks": [
+        "http://streetcatpull.hellobike.com/live/4300845904274638881_0.m3u8",
+        "http://streetcatpull.hellobike.com/live/4300845904274638881_1.m3u8",
+        "http://streetcatpull.hellobike.com/live/4300845904274638881_2.m3u8"
+    ]
+}
