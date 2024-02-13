@@ -6,6 +6,7 @@ from googleapiclient.discovery import build
 from auth_youtube import Authorize
 import logging
 import json
+import time
 
 with open('cams.json', 'r') as file:
     cams_json = json.loads(file.read())
@@ -34,7 +35,6 @@ def getLiveChatId(LIVE_STREAM_ID):
     return liveChatId
 
 stream_id = input("Enter the live stream ID: ")
-chat = pytchat.create(video_id = stream_id)
 liveChatId = getLiveChatId(stream_id)
 
 def sendReplyToLiveChat(liveChatId, message):
@@ -51,6 +51,43 @@ def sendReplyToLiveChat(liveChatId, message):
         }
     )
     response = reply.execute()
+
+def liveChatListener():
+    global cam_proc
+    logging.info(f"{cam_viewer.current_time()} | Chat listener launch...")
+    chat = pytchat.create(video_id = stream_id)
+    try:
+        while chat.is_alive():
+            try:
+                for c in chat.get().sync_items():
+                    print(f"Chat | {c.author.name}: {c.message}")
+                    logging.info(f"{cam_viewer.current_time()} | Chat | {c.author.name}: {c.message}")
+                    if c.message.split()[0] == "!cam" and len(c.message.split()) == 3:
+                        com, cam_name, cam_number = c.message.split()
+                        player = cam_viewer.playback(command = command, 
+                                            parameters = parameters, 
+                                            cams_json = cams_json,
+                                            cam_name = cam_name, 
+                                            cam_number = int(cam_number),
+                                            use_text = True,
+                                            fontfile = conf.fontfile)
+                        cam_proc = player[0]
+                        sendReplyToLiveChat(liveChatId, player[1])
+                    elif c.message.split()[0] == "!rand":
+                        player = cam_viewer.playback(command = command, 
+                                            parameters = parameters,
+                                            cams_json = cams_json,
+                                            use_text = True,
+                                            fontfile = conf.fontfile)
+                        cam_proc = player[0]
+                        sendReplyToLiveChat(liveChatId, player[1])
+            except:
+                logging.error(f"{cam_viewer.current_time()} | Chat listener error") 
+                print("Chat listener error")
+    except:
+        logging.warning(f"{cam_viewer.current_time()} | Chat is not live! Attempting to reboot...")
+        time.sleep(10)
+        liveChatListener()
 
 def checker():
     global cam_proc
@@ -69,33 +106,4 @@ def checker():
         except: sendReplyToLiveChat(liveChatId, "Cams Rebooting Error")
 
 _thread.start_new_thread(checker, ())
-
-logging.info(f"{cam_viewer.current_time()} | Chat listener launch...")
-while chat.is_alive():
-    try:
-        for c in chat.get().sync_items():
-            print(f"Chat | {c.author.name}: {c.message}")
-            logging.info(f"{cam_viewer.current_time()} | Chat | {c.author.name}: {c.message}")
-            if c.message.split()[0] == "!cam" and len(c.message.split()) == 3:
-                com, cam_name, cam_number = c.message.split()
-                player = cam_viewer.playback(command = command, 
-                                    parameters = parameters, 
-                                    cams_json = cams_json,
-                                    cam_name = cam_name, 
-                                    cam_number = int(cam_number),
-                                    use_text = True,
-                                    fontfile = conf.fontfile)
-                cam_proc = player[0]
-                sendReplyToLiveChat(liveChatId, player[1])
-            elif c.message.split()[0] == "!rand":
-                player = cam_viewer.playback(command = command, 
-                                    parameters = parameters,
-                                    cams_json = cams_json,
-                                    use_text = True,
-                                    fontfile = conf.fontfile)
-                cam_proc = player[0]
-                sendReplyToLiveChat(liveChatId, player[1])
-    except:
-        logging.error(f"{cam_viewer.current_time()} | Chat | ERROR") 
-        print("Chat | ERROR")
-logging.error(f"{cam_viewer.current_time()} | Chat is not alive!!!")
+liveChatListener()
