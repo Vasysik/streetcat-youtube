@@ -30,7 +30,7 @@
     flow_server_port = 8080
     flow_open_browser = False
 
-    # Client keys for restream_youtube.py
+    # Client keys
     rtmp_key = ""
     client_id = ""
     client_secret = ""
