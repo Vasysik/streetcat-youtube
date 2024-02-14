@@ -7,8 +7,19 @@ services:
     container_name: streetcat_restream
     ports:
       - "8080:8080"
+    network_mode: host
     volumes:
       - ./conf.py:/conf.py:ro
       - ./client.json:/client.json:ro
       - ./cams.json:/cams.json:ro
       - ./viewer.log:/viewer.log
+      - ./auth_link.txt:/auth_link.txt
+  web:
+    image: nginx
+    volumes:
+    -  ./auth_link.txt:/usr/share/nginx/html/index.html:ro
+    ports:
+    - "8080:80"
+    environment:
+    - NGINX_HOST=foobar.com
+    - NGINX_PORT=80
