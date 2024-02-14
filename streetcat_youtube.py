@@ -11,9 +11,10 @@ import time
 with open('cams.json', 'r') as file:
     cams_json = json.loads(file.read())
 
-logging.basicConfig(filename=f"viewer.log", level=logging.INFO)
-httpx_logger = logging.getLogger("httpx")
-httpx_logger.disabled = True
+if conf.use_logging:
+    logging.basicConfig(filename=f"viewer.log", level=logging.INFO)
+    httpx_logger = logging.getLogger("httpx")
+    httpx_logger.disabled = True
 
 authResponse = Authorize('client.json')
 credentials = authResponse.credentials
@@ -34,7 +35,8 @@ def getLiveChatId(LIVE_STREAM_ID):
     logging.info(f"{cam_viewer.current_time()} | LiveChatID: {liveChatId}")
     return liveChatId
 
-stream_id = input("Enter the live stream ID: ")
+stream_id = conf.live_stream_id
+if stream_id == "": stream_id = input("Enter the live stream ID: ")
 liveChatId = getLiveChatId(stream_id)
 
 def sendReplyToLiveChat(liveChatId, message):
@@ -70,7 +72,7 @@ def liveChatListener():
                                             cam_name = cam_name, 
                                             cam_number = int(cam_number),
                                             use_text = True,
-                                            fontfile = conf.fontfile)
+                                            fontfile = conf.font_file)
                         cam_proc = player[0]
                         sendReplyToLiveChat(liveChatId, player[1])
                     elif c.message.split()[0] == "!rand":
@@ -78,7 +80,7 @@ def liveChatListener():
                                             parameters = parameters,
                                             cams_json = cams_json,
                                             use_text = True,
-                                            fontfile = conf.fontfile)
+                                            fontfile = conf.font_file)
                         cam_proc = player[0]
                         sendReplyToLiveChat(liveChatId, player[1])
             except:
@@ -99,7 +101,7 @@ def checker():
                                     parameters = parameters,
                                     cams_json = cams_json,
                                     use_text = True,
-                                    fontfile = conf.fontfile)
+                                    fontfile = conf.font_file)
                 cam_proc = player[0]
                 sendReplyToLiveChat(liveChatId, player[1])
             cam_proc.wait()

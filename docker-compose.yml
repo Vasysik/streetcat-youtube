@@ -5,10 +5,10 @@ services:
     build: .
     image: TUBIK-corp/streetcat_restream
     container_name: streetcat_restream
-    stdin_open: true
-    tty: true
-    command: python ./restream_youtube.py
+    ports:
+      - "8080:8080"
     volumes:
       - ./conf.py:/conf.py:ro
       - ./client.json:/client.json:ro
+      - ./cams.json:/cams.json:ro
       - ./viewer.log:/viewer.log

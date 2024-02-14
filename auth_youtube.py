@@ -13,5 +13,11 @@ def Authorize(file):
         'https://www.googleapis.com/auth/youtube.force-ssl',
         'https://www.googleapis.com/auth/youtube.readonly',
     })
-    flow.run_console()
+    if conf.use_flow_server:
+        flow.run_local_server(host=conf.flow_server_host, 
+                            port=conf.flow_server_port, 
+                            authorization_prompt_message='Please visit this URL to authorize this application: {url}', 
+                            success_message='The authentication flow has completed. You may close this window.', 
+                            open_browser=conf.flow_open_browser)
+    else: flow.run_console()    
     return flow
