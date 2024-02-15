@@ -5,7 +5,7 @@ services:
     build: .
     image: TUBIK-corp/streetcat_restream
     container_name: streetcat_restream
-    command: python ./restream_youtube.py
+    command: python ./streetcat_youtube.py
     volumes:
       - ./conf.py:/conf.py:ro
       - ./client.json:/client.json:ro
@@ -19,7 +19,7 @@ services:
     network_mode: host
     ports:
       - "8080:8080"
-    command: python ./restream_youtube.py
+    command: python ./web_app.py
     volumes:
       - ./conf.py:/conf.py:ro
       - ./auth.json:/auth.json

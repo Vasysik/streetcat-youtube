@@ -17,9 +17,6 @@
     ```
     # Logging settings
     use_logging = False
-   
-    # Live stream settings
-    live_stream_id = ""
 
     # Goggle API Flow settings
     auth_json = "auth.json"
