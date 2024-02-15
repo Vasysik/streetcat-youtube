@@ -9,7 +9,7 @@ services:
     volumes:
       - ./conf.py:/conf.py:ro
       - ./client.json:/client.json:ro
-      - ./cams.json:/cams.json:ro
+      - ./streetcat_viewer/cams.json:/cams.json:ro
       - ./viewer.log:/viewer.log
       - ./auth.json:/auth.json
   web_app:

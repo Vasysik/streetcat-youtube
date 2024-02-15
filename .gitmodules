@@ -1,0 +1,3 @@
+[submodule "streetcat-viewer"]
+	path = streetcat_viewer
+	url = https://github.com/Vasysik/streetcat-viewer
