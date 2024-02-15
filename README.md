@@ -20,7 +20,7 @@
 
     # Goggle API Flow settings
     auth_json = "auth.json"
-    web_auth = False
+    web_auth = True
 
     # Web App settings
     app_host = "localhost"
