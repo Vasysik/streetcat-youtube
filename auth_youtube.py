@@ -15,7 +15,7 @@ def Authorize(file):
         redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 
 
-    if conf.use_flow_server: return flow_server(flow)
+    if conf.web_auth: return flow_server(flow)
     return flow_local(flow)
 
 def flow_server(flow):

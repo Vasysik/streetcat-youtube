@@ -23,10 +23,11 @@
 
     # Goggle API Flow settings
     auth_json = "auth.json"
-    use_flow_server = True
-    flow_server_host = "localhost"
-    flow_server_port = 8080
-   flow_open_browser = False
+    web_auth = False
+
+    # Web App settings
+    app_host = "localhost"
+    app_port = 8080
 
     # Client keys for streaming
     rtmp_key = ""
