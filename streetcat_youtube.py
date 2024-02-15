@@ -16,7 +16,7 @@ if conf.use_logging:
     httpx_logger = logging.getLogger("httpx")
     httpx_logger.disabled = True
 
-authResponse = Authorize('client.json')
+authResponse = Authorize(conf.client_json)
 credentials = authResponse.credentials
 youtube = build('youtube', 'v3', credentials=credentials)
 

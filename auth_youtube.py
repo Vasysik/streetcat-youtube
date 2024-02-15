@@ -1,40 +1,44 @@
-from google_auth_oauthlib.flow import InstalledAppFlow
-# from google_auth_oauthlib.flow import Flow
+from google_auth_oauthlib.flow import Flow
+from time import sleep
 import conf
-
-client_id = conf.client_id
-client_secret = conf.client_secret
+import json
 
 def Authorize(file):
-    flow = InstalledAppFlow.from_client_secrets_file(file, scopes={
+    flow = Flow.from_client_secrets_file(file, scopes=[
         'openid',
         'https://www.googleapis.com/auth/userinfo.email',
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/youtube',
         'https://www.googleapis.com/auth/youtube.force-ssl',
         'https://www.googleapis.com/auth/youtube.readonly',
-    })
-    if conf.use_flow_server:
-        flow.run_local_server(host=conf.flow_server_host, 
-                            port=conf.flow_server_port, 
-                            authorization_prompt_message='Please visit this URL to authorize this application: {url}', 
-                            success_message='The authentication flow has completed. You may close this window.', 
-                            open_browser=conf.flow_open_browser)
-    else: flow.run_console()    
+        ],
+        redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 
-    # flow = Flow.from_client_secrets_file(file, scopes=[
-    #     'openid',
-    #     'https://www.googleapis.com/auth/userinfo.email',
-    #     'https://www.googleapis.com/auth/userinfo.profile',
-    #     'https://www.googleapis.com/auth/youtube',
-    #     'https://www.googleapis.com/auth/youtube.force-ssl',
-    #     'https://www.googleapis.com/auth/youtube.readonly',
-    #     ],
-    #     redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 
-    # with open("auth_link.txt", "w") as auth_file:
-    #     auth_file.write(flow.authorization_url()[0])
+    if conf.use_flow_server: return flow_server(flow)
+    return flow_local(flow)
 
-    # flow.fetch_token(code=input())
+def flow_server(flow):
+    auth_data = {"auth_url": flow.authorization_url()[0],
+                 "auth_token": ""}
+    with open(conf.auth_json, 'w') as auth_json:
+        json.dump(auth_data, auth_json)
 
+    token = ""
+    while token == "":
+        try:
+            with open(conf.auth_json, 'r') as auth_json:
+                token = json.loads(auth_json.read())["auth_token"]
+        except: None
+        sleep(0.1)
+    with open(conf.auth_json, 'w') as auth_json:
+        auth_data["auth_url"] = ""
+        json.dump(auth_data, auth_json) 
+
+    flow.fetch_token(code=token)
+    return flow
+
+def flow_local(flow):
+    print(f"Please visit this URL to authorize this application: {flow.authorization_url()[0]}")
+    flow.fetch_token(code=input("Enter the authorization code: "))
     return flow

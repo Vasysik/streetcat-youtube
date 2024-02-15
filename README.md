@@ -20,17 +20,17 @@
    
     # Live stream settings
     live_stream_id = ""
-   
-    # Goggle API Flow settings (only works if use_flow_server == True)
-    use_flow_server = False
+
+    # Goggle API Flow settings
+    auth_json = "auth.json"
+    use_flow_server = True
     flow_server_host = "localhost"
     flow_server_port = 8080
-    flow_open_browser = False
+   flow_open_browser = False
 
     # Client keys for streaming
     rtmp_key = ""
-    client_id = ""
-    client_secret = ""
+    client_json = ""
 
     # FFMPEG settings
     command = "ffmpeg -fflags +discardcorrupt -re -i"

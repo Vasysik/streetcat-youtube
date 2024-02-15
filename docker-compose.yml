@@ -13,13 +13,4 @@ services:
       - ./client.json:/client.json:ro
       - ./cams.json:/cams.json:ro
       - ./viewer.log:/viewer.log
-      - ./auth_link.txt:/auth_link.txt
-  web:
-    image: nginx
-    volumes:
-    -  ./auth_link.txt:/usr/share/nginx/html/index.html:ro
-    ports:
-    - "8080:80"
-    environment:
-    - NGINX_HOST=foobar.com
-    - NGINX_PORT=80
+      - ./auth.json:/auth.json
