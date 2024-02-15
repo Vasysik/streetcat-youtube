@@ -17,7 +17,7 @@ if conf.use_logging:
     httpx_logger.disabled = True
 
 authResponse = Authorize(conf.client_json)
-credentials = authResponse.credentials
+credentials = authResponse[0].credentials
 youtube = build('youtube', 'v3', credentials=credentials)
 
 cam_proc = None
@@ -33,7 +33,7 @@ def getLiveChatId(LIVE_STREAM_ID):
     logging.info(f"{cam_viewer.current_time()} | LiveChatID: {liveChatId}")
     return liveChatId
 
-stream_id = conf.live_stream_id
+stream_id = authResponse[1]
 if stream_id == "": stream_id = input("Enter the live stream ID: ")
 liveChatId = getLiveChatId(stream_id)
 
@@ -54,9 +54,9 @@ def sendReplyToLiveChat(liveChatId, message):
 
 def liveChatListener():
     global cam_proc
-    logging.info(f"{cam_viewer.current_time()} | Chat listener launch...")
-    chat = pytchat.create(video_id = stream_id)
     try:
+        logging.info(f"{cam_viewer.current_time()} | Chat listener launch...")
+        chat = pytchat.create(video_id = stream_id)
         while chat.is_alive():
             try:
                 for c in chat.get().sync_items():

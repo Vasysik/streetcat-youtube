@@ -20,25 +20,30 @@ def Authorize(file):
 
 def flow_server(flow):
     auth_data = {"auth_url": flow.authorization_url()[0],
-                 "auth_token": ""}
+                 "auth_token": "",
+                 "stream_id": ""}
     with open(conf.auth_json, 'w') as auth_json:
         json.dump(auth_data, auth_json)
 
     token = ""
-    while token == "":
+    stream_id = ""
+    while token == "" or stream_id == "":
         try:
             with open(conf.auth_json, 'r') as auth_json:
-                token = json.loads(auth_json.read())["auth_token"]
+                data = json.loads(auth_json.read())
+                token = data["auth_token"]
+                stream_id = data["stream_id"]
         except: None
         sleep(0.1)
+    
     with open(conf.auth_json, 'w') as auth_json:
         auth_data["auth_url"] = ""
         json.dump(auth_data, auth_json) 
 
     flow.fetch_token(code=token)
-    return flow
+    return [flow, stream_id]
 
 def flow_local(flow):
     print(f"Please visit this URL to authorize this application: {flow.authorization_url()[0]}")
     flow.fetch_token(code=input("Enter the authorization code: "))
-    return flow
+    return [flow, ""]
