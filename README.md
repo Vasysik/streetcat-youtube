@@ -6,7 +6,7 @@
 3) Download the streetcat-youtube repository:
    ```
    git clone https://github.com/Vasysik/streetcat-youtube/
-   cd .\streetcat-youtube\
+   cd streetcat-youtube
    git submodule update --init
    ```
 4) Create a ```conf.py``` file containing:
