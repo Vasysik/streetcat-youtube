@@ -16,7 +16,6 @@ services:
     build: ./web_app
     image: TUBIK-corp/web_app
     container_name: web_app
-    network_mode: host
     ports:
       - "8080:8080"
     command: python ./web_app.py

@@ -16,7 +16,7 @@
    web_auth = True
    
    # Web App settings
-   app_host = "localhost"
+   app_host = "0.0.0.0"
    app_port = 8080
    
    # Client keys for streaming
