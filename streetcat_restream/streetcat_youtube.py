@@ -70,7 +70,7 @@ def liveChatListener():
                                             cam_name = cam_name, 
                                             cam_number = int(cam_number),
                                             use_text = conf.use_text,
-                                            fontfile = conf.font_file)
+                                            font_file = conf.font_file)
                         cam_proc = player[0]
                         sendReplyToLiveChat(liveChatId, player[1])
                     elif c.message.split()[0] == "!rand":
@@ -78,7 +78,7 @@ def liveChatListener():
                                             parameters = conf.parameters,
                                             cams_json = cams_json,
                                             use_text = conf.use_text,
-                                            fontfile = conf.font_file)
+                                            font_file = conf.font_file)
                         cam_proc = player[0]
                         sendReplyToLiveChat(liveChatId, player[1])
             except:
@@ -99,7 +99,7 @@ def checker():
                                     parameters = conf.parameters,
                                     cams_json = cams_json,
                                     use_text = conf.use_text,
-                                    fontfile = conf.font_file)
+                                    font_file = conf.font_file)
                 cam_proc = player[0]
                 sendReplyToLiveChat(liveChatId, player[1])
             cam_proc.wait()

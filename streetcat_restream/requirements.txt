@@ -1,4 +1,4 @@
-cam-viewer==0.0.1
+cam-viewer==0.0.2
 pytchat==0.5.5
 google-api-python-client==1.7.2
 google-auth-oauthlib==0.4.1
