@@ -6,15 +6,17 @@
 </head>
 <body>
     <h2>Google API Auth:</h2>
-    <p><a href="{{ auth_url }}" class="auth-url-btn" target="_blank">Auth link</a></p>
     <form method="post">
-        <label for="auth_token">Auth Token:</label>
-        <input type="text" id="auth_token" name="auth_token" required>
+        <input type="button" value="Auth link" onclick="window.open('{{ auth_url }}', '_blank')">
         <br>
-        <label for="stream_id">Stream ID:</label>
-        <input type="text" id="stream_id" name="stream_id" required>
+        <input type="text" id="auth_token" name="auth_token" placeholder="Auth Token" required>
+        <br>
+        <input type="text" id="stream_id" name="stream_id" placeholder="Stream ID" required>
         <br>
         <input type="submit" value="Send">
     </form>
+    {% if error %}
+        <p class="error-message">Authorization error. Please try again.</p>
+    {% endif %}
 </body>
 </html>

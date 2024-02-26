@@ -14,14 +14,14 @@ def Authorize(file):
         ],
         redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 
-
     if conf.web_auth: return flow_server(flow)
     return flow_local(flow)
 
 def flow_server(flow):
     auth_data = {"auth_url": flow.authorization_url()[0],
                  "auth_token": "",
-                 "stream_id": ""}
+                 "stream_id": "",
+                 "authorized": False}
     with open(conf.auth_json, 'w') as auth_json:
         json.dump(auth_data, auth_json)
 
@@ -36,12 +36,14 @@ def flow_server(flow):
         except: None
         sleep(0.1)
     
-    with open(conf.auth_json, 'w') as auth_json:
-        auth_data["auth_url"] = ""
-        json.dump(auth_data, auth_json) 
-
-    flow.fetch_token(code=token)
-    return [flow, stream_id]
+    try: 
+        flow.fetch_token(code=token)
+        with open(conf.auth_json, 'w') as auth_json:
+            auth_data["auth_url"] = ""
+            auth_data["authorized"] = True
+            json.dump(auth_data, auth_json) 
+        return [flow, stream_id]
+    except: return flow_server(flow)
 
 def flow_local(flow):
     print(f"Please visit this URL to authorize this application: {flow.authorization_url()[0]}")

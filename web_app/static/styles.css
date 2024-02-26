@@ -32,13 +32,15 @@ input {
     margin-bottom: 16px;
     box-sizing: border-box;
     font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="button"], input[type="submit"]  {
     margin-bottom: 8px;
 }
 
-input[type="submit"], .auth-url-btn {
+input[type="submit"], input[type="button"] {
     background-color: #4285f4;
     color: #ffffff;
     cursor: pointer;
@@ -46,17 +48,15 @@ input[type="submit"], .auth-url-btn {
     border-radius: 4px;
     font-size: 16px;
     padding: 10px 20px;
+    transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover, .auth-url-btn:hover {
+input[type="submit"]:hover, input[type="button"]:hover {
     background-color: #3367d6;
 }
 
-.auth-url-btn {
-    display: inline-block;
-    text-decoration: none;
-}
-
-.auth-url-btn:hover {
-    text-decoration: underline;
+.error-message {
+    color: #ff0000;
+    font-weight: bold;
+    margin-top: 10px;
 }
