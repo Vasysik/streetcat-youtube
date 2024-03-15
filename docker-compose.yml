@@ -3,18 +3,18 @@ version: '2'
 services:
   streetcat_restream:
     build: ./streetcat_restream
-    image: TUBIK-corp/streetcat_restream
+    image: streetcat_restream
     container_name: streetcat_restream
     command: python ./streetcat_youtube.py
     volumes:
       - ./conf.py:/conf.py:ro
       - ./client.json:/client.json:ro
-      - ./streetcat_viewer/cams.json:/cams.json:ro
+      - ./cams_list.json:/cams_list.json:ro
       - ./viewer.log:/viewer.log
       - ./auth.json:/auth.json
   web_app:
     build: ./web_app
-    image: TUBIK-corp/web_app
+    image: web_app
     container_name: web_app
     ports:
       - "8080:8080"
@@ -22,3 +22,12 @@ services:
     volumes:
       - ./conf.py:/conf.py:ro
       - ./auth.json:/auth.json
+  json_tasker:
+    build: ./json_tasker
+    image: json_tasker
+    container_name: json_tasker
+    command: python ./tasker.py
+    volumes:
+      - ./conf.py:/conf.py:ro
+      - ./cams_list.json:/cams_list.json
+      - ./tasks.json:/tasks.json

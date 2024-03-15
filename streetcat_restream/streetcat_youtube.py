@@ -8,7 +8,7 @@ import logging
 import json
 import time
 
-with open('cams.json', 'r') as file:
+with open(conf.cams_json, 'r') as file:
     cams_json = json.loads(file.read())
 
 if conf.use_logging:
@@ -63,13 +63,13 @@ def liveChatListener():
                     print(f"Chat | {c.author.name}: {c.message}")
                     logging.info(f"{cam_viewer.current_time()} | Chat | {c.author.name}: {c.message}")
                     if c.message.split()[0] == "!cam" and len(c.message.split()) == 3:
-                        com, cam_name, cam_number = c.message.split()
+                        com, cam_group, cam_id = c.message.split()
                         player = cam_viewer.playback(command = conf.command, 
                                             parameters = conf.parameters, 
                                             cams_json = cams_json,
-                                            cam_name = cam_name, 
-                                            cam_number = int(cam_number),
-                                            use_text = conf.use_text,
+                                            cam_group = cam_group, 
+                                            cam_id = int(cam_id),
+                                            use_title = conf.use_title,
                                             font_file = conf.font_file)
                         cam_proc = player[0]
                         sendReplyToLiveChat(liveChatId, player[1])
@@ -77,7 +77,7 @@ def liveChatListener():
                         player = cam_viewer.playback(command = conf.command, 
                                             parameters = conf.parameters,
                                             cams_json = cams_json,
-                                            use_text = conf.use_text,
+                                            use_title = conf.use_title,
                                             font_file = conf.font_file)
                         cam_proc = player[0]
                         sendReplyToLiveChat(liveChatId, player[1])
@@ -98,7 +98,7 @@ def checker():
                 player = cam_viewer.playback(command = conf.command, 
                                     parameters = conf.parameters,
                                     cams_json = cams_json,
-                                    use_text = conf.use_text,
+                                    use_title = conf.use_title,
                                     font_file = conf.font_file)
                 cam_proc = player[0]
                 sendReplyToLiveChat(liveChatId, player[1])

@@ -1,10 +1,11 @@
 import urllib.request
 import json 
 import cam_viewer
+import conf
 from time import sleep
 
-cams_json = "cams_list.json"
-tasks_json = "./cams_updater/tasks.json"
+cams_json = conf.cams_json
+tasks_json = conf.tasks_json
 
 def add_group(cams_json, group, title = "", cameras = []):
     with open(cams_json, "r") as json_file:
@@ -93,6 +94,8 @@ def add_from_json_url(cams_json, url):
                   title = data[group]["title"], 
                   cameras = data[group]["cameras"])
     return(True)
+
+add_from_json_url(cams_json, "https://raw.githubusercontent.com/Vasysik/streetcat-viewer/c4871e7e725e2f9dc3316103b7d0aaebc334e118/cams_list.json")
 
 while True:
     with open(tasks_json, "r") as json_file:
